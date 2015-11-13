@@ -52,7 +52,9 @@ public class ReturnCode implements Serializable {
    * @throws EbicsException
    */
   public void throwException() throws EbicsException {
-    throw new EbicsException(this, text);
+    if (!isOk()) {
+      throw new EbicsException(this, text);
+    }
   }
 
   /**
