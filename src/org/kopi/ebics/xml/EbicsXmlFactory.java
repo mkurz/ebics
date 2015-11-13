@@ -936,7 +936,7 @@ public class EbicsXmlFactory {
     StaticHeaderOrderDetailsType newStaticHeaderOrderDetailsType = StaticHeaderOrderDetailsType.Factory.newInstance();
     
     if (orderId != null) {
-      //newStaticHeaderOrderDetailsType.setOrderID(orderId);
+      newStaticHeaderOrderDetailsType.setOrderID(orderId);
     }
     newStaticHeaderOrderDetailsType.setOrderAttribute(org.kopi.ebics.schema.h003.OrderAttributeType.Enum.forString(orderAttribute));
     newStaticHeaderOrderDetailsType.setOrderType(orderType);
@@ -960,7 +960,9 @@ public class EbicsXmlFactory {
                                                                                 StandardOrderParamsType orderParams)
   {
     StaticHeaderOrderDetailsType newStaticHeaderOrderDetailsType = StaticHeaderOrderDetailsType.Factory.newInstance();
-    newStaticHeaderOrderDetailsType.setOrderID(orderId);
+    if (orderId != null) {
+      newStaticHeaderOrderDetailsType.setOrderID(orderId);
+    }
     newStaticHeaderOrderDetailsType.setOrderAttribute(org.kopi.ebics.schema.h003.OrderAttributeType.Enum.forString(orderAttribute));
     newStaticHeaderOrderDetailsType.setOrderType(orderType);
     newStaticHeaderOrderDetailsType.setOrderParams(orderParams);
