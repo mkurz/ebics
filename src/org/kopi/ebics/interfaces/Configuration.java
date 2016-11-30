@@ -182,6 +182,12 @@ public interface Configuration {
    *         the XML transfer files
    */
   public boolean isTraceEnabled();
+  
+  /**
+   * Tells if we allow order IDs when a download request is performed.
+   * @return True if the order ID should be specified in a download request.
+   */
+  public boolean isOrderIDAllowedInDownload();
 
   /**
    * Returns if the files to be transferred should be

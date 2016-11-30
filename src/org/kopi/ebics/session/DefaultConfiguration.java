@@ -245,6 +245,12 @@ public class DefaultConfiguration implements Configuration {
   public boolean isTraceEnabled() {
     return true;
   }
+  
+  @Override
+  public boolean isOrderIDAllowedInDownload() {
+    // by default, we don't mention order ID i download requests.
+    return false;
+  }
 
   @Override
   public boolean isCompressionEnabled() {

@@ -84,6 +84,7 @@ public class DInitializationRequestElement extends InitializationRequestElement 
     Encryption 				encryption;
     OrderType 				orderType;
     StaticHeaderOrderDetailsType 	orderDetails;
+    String                              orderID;
 
     mutable = EbicsXmlFactory.createMutableHeaderType("Initialisation", null);
     product = EbicsXmlFactory.createProduct(session.getProduct().getLanguage(), session.getProduct().getName());
@@ -95,6 +96,7 @@ public class DInitializationRequestElement extends InitializationRequestElement 
 	                                          decodeHex(session.getUser().getPartner().getBank().getE002Digest()));
     bankPubKeyDigests = EbicsXmlFactory.createBankPubKeyDigests(authentication, encryption);
     orderType = EbicsXmlFactory.createOrderType(type.getOrderType());
+    orderID = session.getConfiguration().isOrderIDAllowedInDownload() ? session.getUser().getPartner().nextOrderId() : null;
     if (type.equals(org.kopi.ebics.session.OrderType.FDL)) {
       FDLOrderParamsType		fDLOrderParamsType;
       FileFormatType 			fileFormat;
@@ -118,7 +120,7 @@ public class DInitializationRequestElement extends InitializationRequestElement 
 	parameter = EbicsXmlFactory.createParameter("TEST", value);
 	fDLOrderParamsType.setParameterArray(new Parameter[] {parameter});
       }
-      orderDetails = EbicsXmlFactory.createStaticHeaderOrderDetailsType(session.getUser().getPartner().nextOrderId(),
+      orderDetails = EbicsXmlFactory.createStaticHeaderOrderDetailsType(orderID,
                                                                         "DZHNN",
                                                                         orderType,
                                                                         fDLOrderParamsType);
@@ -126,8 +128,7 @@ public class DInitializationRequestElement extends InitializationRequestElement 
       StandardOrderParamsType		standardOrderParamsType;
 
       standardOrderParamsType = EbicsXmlFactory.createStandardOrderParamsType();
-      //FIXME Some banks cannot handle OrderID element in download process. Add parameter in configuration!!!
-      orderDetails = EbicsXmlFactory.createStaticHeaderOrderDetailsType(null,//session.getUser().getPartner().nextOrderId(),
+      orderDetails = EbicsXmlFactory.createStaticHeaderOrderDetailsType(orderID,
 	                                                                "DZHNN",
 	                                                                orderType,
 	                                                                standardOrderParamsType);
